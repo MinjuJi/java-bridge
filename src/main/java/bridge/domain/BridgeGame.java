@@ -1,5 +1,7 @@
 package bridge.domain;
 
+import bridge.validator.Validator;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +18,8 @@ public class BridgeGame {
     private int totalAttempt = COUNT_ZERO;
 
     public BridgeGame(List<String> bridge) throws IllegalArgumentException {
+        Validator.validateListLengthInRange(bridge, BRIDGE_MIN_LENGTH, BRIDGE_MAX_LENGTH);
+
         this.systemBridge = bridge;
         totalAttempt++;
     }
