@@ -49,6 +49,8 @@ public class BridgeGame {
      * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void retry() {
+        userBridge = new ArrayList<>();
+        totalAttempt++;
     }
 
     public List<List<String>> getRoundResult() {
@@ -67,13 +69,15 @@ public class BridgeGame {
     }
 
     private String getOXByUserMove(int index) {
-        if (systemBridge.get(index).equals(userBridge.get(index))) {
+        if (systemBridge.get(index)
+                        .equals(userBridge.get(index))) {
             return "O";
         }
         return "X";
     }
 
-    public boolean isGameOver(){
-        return !systemBridge.subList(0,userBridge.size()).equals(userBridge);
+    public boolean isGameOver() {
+        return !systemBridge.subList(0, userBridge.size())
+                            .equals(userBridge);
     }
 }
