@@ -42,7 +42,7 @@ public class BridgeGameTest {
         bridgeGameCase1.move("U");
 
         //when
-        List<String> result1 = bridgeGameCase1.getRoundResult().get(0);
+        List<String> result1 = bridgeGameCase1.getRoundMaps().get(0);
 
         //then
         assertThat(result1).isEqualTo(List.of("D", "U", "U"));
@@ -57,10 +57,10 @@ public class BridgeGameTest {
         //when
         bridgeGameCase1.move("D");
         bridgeGameCase1.move("U");
-        List<String> result1 = bridgeGameCase1.getRoundResult().get(1);
+        List<String> result1 = bridgeGameCase1.getRoundMaps().get(1);
 
         bridgeGameCase1.move("D");
-        List<String> result2 = bridgeGameCase1.getRoundResult().get(1);
+        List<String> result2 = bridgeGameCase1.getRoundMaps().get(1);
 
         //then
         assertThat(result1).isEqualTo(List.of("O", "O"));
@@ -124,7 +124,7 @@ public class BridgeGameTest {
         bridgeGameCase1.move("U");
 
         //when
-        List<List<String>> result1 = bridgeGameCase1.getRoundResult();
+        List<List<String>> result1 = bridgeGameCase1.getRoundMaps();
 
         //then
         assertThat(result1.get(0)).isEqualTo(List.of("D", "U", "U"));

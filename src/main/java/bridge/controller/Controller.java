@@ -50,8 +50,8 @@ public class Controller {
     }
 
     private void showRoundResult() {
-        outputView.printMap(bridgeGame.getRoundResult(), Command.MOVE_UP);
-        outputView.printMap(bridgeGame.getRoundResult(), Command.MOVE_DOWN);
+        outputView.printMap(bridgeGame.getRoundMaps(), Command.MOVE_UP);
+        outputView.printMap(bridgeGame.getRoundMaps(), Command.MOVE_DOWN);
     }
 
     private void continueOrFinishGame() {
