@@ -19,6 +19,7 @@ public class Controller {
     public void run() {
         startGame();
         playGame();
+        showGameResult();
     }
 
     public void startGame() {
@@ -52,32 +53,32 @@ public class Controller {
     }
 
     private void showRoundResult() {
-        outputView.printMap(bridgeGame.getRoundResult(),UPPER_BRIDGE);
-        outputView.printMap(bridgeGame.getRoundResult(),DOWNER_BRIDGE);
+        outputView.printMap(bridgeGame.getRoundResult(), UPPER_BRIDGE);
+        outputView.printMap(bridgeGame.getRoundResult(), DOWNER_BRIDGE);
     }
 
-    private void continueOrFinishGame(){
-        if(bridgeGame.isGameCompleted()) {
+    private void continueOrFinishGame() {
+        if (bridgeGame.isGameCompleted()) {
             return;
         }
-        if(bridgeGame.isGameOver()){
+        if (bridgeGame.isGameOver()) {
             replayOrExit();
             return;
         }
         playGame();
     }
 
-    private void replayOrExit(){
+    private void replayOrExit() {
         String command = getRetryOrQuitCommand();
-        if( command.equals("R")){
+        if (command.equals("R")) {
             bridgeGame.retry();
             playGame();
         }
     }
 
-    private String getRetryOrQuitCommand(){
+    private String getRetryOrQuitCommand() {
         String command;
-        try{
+        try {
             command = inputView.readGameCommand();
             Validator.validateIsStringOneCharacter(command, COMMAND_RETRY, COMMAND_QUIT);
         } catch (IllegalArgumentException error) {
@@ -85,5 +86,9 @@ public class Controller {
             return getRetryOrQuitCommand();
         }
         return command;
+    }
+
+    public void showGameResult() {
+        outputView.printResult(bridgeGame);
     }
 }
