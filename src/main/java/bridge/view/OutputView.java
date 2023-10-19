@@ -1,6 +1,8 @@
 package bridge.view;
 
+import bridge.domain.Bridge;
 import bridge.domain.Command;
+import bridge.domain.ResultMap;
 import bridge.service.BridgeGame;
 
 import java.util.List;
@@ -21,22 +23,21 @@ public class OutputView {
      */
 
     public void printMap(List<List<String>> result, Command command) {
+        int mapSize = result.get(ResultMap.DIRECTION_MAP.index())
+                            .size();
         System.out.print("[");
-        for (int index = 0; index < result.get(0)
-                                          .size(); index++) {
+        for (int index = Bridge.START_INDEX.getValue(); index < mapSize; index++) {
             printMoveOrBlank(result, index, command);
-            printVerticalBar(result.get(0)
-                                   .size(), index);
+            printVerticalBar(mapSize, index);
         }
         System.out.println("]");
     }
 
     private void printMoveOrBlank(List<List<String>> result, int index, Command move) {
-        List<String> userBridge = result.get(0);
-        List<String> bridgeLog = result.get(1);
-        if (userBridge.get(index)
-                      .equals(move.getValue())) {
-            System.out.printf(" %s ", bridgeLog.get(index));
+        List<String> directionMap = result.get(ResultMap.DIRECTION_MAP.index());
+        List<String> signMap = result.get(ResultMap.SIGN_MAP.index());
+        if (directionMap.get(index).equals(move.getValue())) {
+            System.out.printf(" %s ", signMap.get(index));
             return;
         }
         System.out.print("   ");
@@ -70,15 +71,15 @@ public class OutputView {
         System.out.println("\n게임 성공 여부: 실패");
     }
 
-    public void printBridgeSizeInputError(){
+    public void printBridgeSizeInputError() {
         System.out.println("[ERROR] 다리 길이는 3~20 사이의 값을 가져야 합니다. 다시 입력해 주십시오.");
     }
 
-    public void printPlayerMoveInputError(){
+    public void printPlayerMoveInputError() {
         System.out.println("[ERROR] 이동 방향은 'U'/'D' 중 한가지로 입력되어야 합니다. 다시 입력해 주십시오.");
     }
 
-    public void printRetryOrQuitInputError(){
+    public void printRetryOrQuitInputError() {
         System.out.println("[ERROR] 입력값은 'R'/'Q' 중 한가지로 입력되어야 합니다. 다시 입력해 주십시오.");
     }
 }
