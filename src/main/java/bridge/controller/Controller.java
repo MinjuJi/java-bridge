@@ -89,6 +89,8 @@ public class Controller {
     }
 
     public void showGameResult() {
+        outputView.printResultHeader();
+        showRoundResult();
         outputView.printResult(bridgeGame);
     }
 }
