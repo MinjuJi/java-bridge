@@ -3,12 +3,17 @@ package bridge.controller;
 import bridge.BridgeNumberGenerator;
 import bridge.BridgeRandomNumberGenerator;
 import bridge.service.BridgeGame;
+import bridge.validator.Validator;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 
 public class Controller {
     private final InputView inputView = new InputView();
     private final OutputView outputView = new OutputView();
+    private final String UPPER_BRIDGE = "U";
+    private final String DOWNER_BRIDGE = "D";
+    private final String COMMAND_RETRY = "R";
+    private final String COMMAND_QUIT = "Q";
     private BridgeGame bridgeGame;
 
     public void run() {
@@ -34,7 +39,7 @@ public class Controller {
     public void playGame() {
         movePlayer();
         showRoundResult();
-        playGame();
+        continueOrFinishGame();
     }
 
     private void movePlayer() {
@@ -47,7 +52,35 @@ public class Controller {
     }
 
     private void showRoundResult() {
-        outputView.printMap(bridgeGame.getRoundResult(), "U");
-        outputView.printMap(bridgeGame.getRoundResult(), "D");
+        outputView.printMap(bridgeGame.getRoundResult(),UPPER_BRIDGE);
+        outputView.printMap(bridgeGame.getRoundResult(),DOWNER_BRIDGE);
+    }
+
+    private void continueOrFinishGame(){
+        if(bridgeGame.isGameOver()){
+            replayOrExit();
+            return;
+        }
+        playGame();
+    }
+
+    private void replayOrExit(){
+        String command = getRetryOrQuitCommand();
+        if( command.equals("R")){
+            bridgeGame.retry();
+            playGame();
+        }
+    }
+
+    private String getRetryOrQuitCommand(){
+        String command;
+        try{
+            command = inputView.readGameCommand();
+            Validator.validateIsStringOneCharacter(command, COMMAND_RETRY, COMMAND_QUIT);
+        } catch (IllegalArgumentException error) {
+            System.out.println("[ERROR] 입력값은 'R'/'Q' 중 한가지로 입력되어야 합니다. 다시 입력해 주십시오.");
+            return getRetryOrQuitCommand();
+        }
+        return command;
     }
 }
